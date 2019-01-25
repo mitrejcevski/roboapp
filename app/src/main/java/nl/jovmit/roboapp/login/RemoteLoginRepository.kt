@@ -8,9 +8,9 @@ class RemoteLoginRepository(
     private val loginApi: LoginApi
 ) : LoginRepository {
 
-    override fun performLogin(credentials: LoginCredentials): LoginResult {
+    override suspend fun performLogin(credentials: LoginCredentials): LoginResult {
         return try {
-            val loggedInUser = loginApi.login(credentials)
+            val loggedInUser = loginApi.login(credentials).await()
             LoginResult.Success(loggedInUser)
         } catch (e: HttpException) {
             LoginResult.Failure("Incorrect Credentials")

@@ -5,5 +5,5 @@ import nl.jovmit.roboapp.login.data.LoginResult
 
 interface LoginRepository {
 
-    fun performLogin(credentials: LoginCredentials): LoginResult
+    suspend fun performLogin(credentials: LoginCredentials): LoginResult
 }

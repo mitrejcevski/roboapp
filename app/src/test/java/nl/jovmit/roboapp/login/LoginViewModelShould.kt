@@ -3,7 +3,9 @@ package nl.jovmit.roboapp.login
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockitokotlin2.given
 import com.nhaarman.mockitokotlin2.never
-import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyBlocking
+import kotlinx.coroutines.runBlocking
+import nl.jovmit.roboapp.login.common.TestCoroutineDispatchers
 import nl.jovmit.roboapp.login.data.LoginCredentials
 import nl.jovmit.roboapp.login.validation.CredentialsValidator
 import org.junit.Before
@@ -11,7 +13,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.verification.VerificationMode
 
 @RunWith(MockitoJUnitRunner::class)
 class LoginViewModelShould {
@@ -30,7 +34,8 @@ class LoginViewModelShould {
 
     @Before
     fun initialize() {
-        loginViewModel = LoginViewModel(validator, loginRepository)
+        val dispatchers = TestCoroutineDispatchers()
+        loginViewModel = LoginViewModel(dispatchers, validator, loginRepository)
     }
 
     @Test
@@ -39,7 +44,7 @@ class LoginViewModelShould {
 
         loginViewModel.login(credentials)
 
-        verify(loginRepository).performLogin(credentials)
+        verifyBlocking(loginRepository) { performLogin(credentials) }
     }
 
     @Test
@@ -48,6 +53,15 @@ class LoginViewModelShould {
 
         loginViewModel.login(credentials)
 
-        verify(loginRepository, never()).performLogin(credentials)
+        verifyBlocking(loginRepository, never()) { performLogin(credentials) }
+    }
+
+    private fun <T> verifyBlocking(
+        mock: T,
+        mode: VerificationMode,
+        f: suspend T.() -> Unit
+    ) {
+        val m = Mockito.verify(mock, mode)
+        runBlocking { m.f() }
     }
 }
