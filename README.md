@@ -1,12 +1,11 @@
-## Login Exercise
+## TDD Demos
 
-### Outside-In TDD style demonstration
+### This project is used for recording screen casts
 
-#### Jovche Mitrejchevski @jovchem
+#### Login Screencast
+Working through implementation of a Login feature. [Check out the video](https://youtu.be/AHEJGWY1B0s)
 
-##### Problem Definition:
+#### Push notifications screencast
+Working through implementation of the push notifications feature. [Check out the video](https://youtu.be/LTqvVWvmACY)
 
-Implement a login feature that will:
-1. Handle successful login result.
-2. Handle failure login results.
-3. Not perform login with invalid credentials.
+Follow me on Twitter [@jovmit](https://twitter.com/jovchem)
