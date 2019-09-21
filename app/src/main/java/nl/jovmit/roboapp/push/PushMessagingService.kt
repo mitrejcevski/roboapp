@@ -19,8 +19,8 @@ class PushMessagingService : FirebaseMessagingService() {
         handler = NotificationHandler(resolver, builder, notifier)
     }
 
-    override fun onMessageReceived(remoteMessage: RemoteMessage?) {
-        remoteMessage?.let { message ->
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        remoteMessage.let { message ->
             handler.handle(message.data)
         }
     }
