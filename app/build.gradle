@@ -45,15 +45,14 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-moshi:2.4.0")
     implementation("com.google.firebase:firebase-messaging:20.0.1")
 
-    androidTestImplementation("androidx.test:runner:1.2.0")
-    androidTestImplementation("androidx.test:rules:1.2.0")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
-    androidTestImplementation("org.mockito:mockito-android:3.0.0")
-    androidTestImplementation("android.arch.core:core-testing:2.0.0")
+    androidTestImplementation "androidx.test.ext:junit:1.1.0"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
+    androidTestImplementation "androidx.test:rules:1.1.1"
+    androidTestImplementation "org.mockito:mockito-android:3.0.0"
+    androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.5.2"
     testImplementation "junit:junit:4.12"
-    testImplementation("junit:junit:4.12")
     testImplementation("androidx.test:core:1.2.0")
     testImplementation("android.arch.core:core-testing:2.0.0")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
