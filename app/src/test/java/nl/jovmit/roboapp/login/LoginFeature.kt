@@ -4,7 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.given
 import com.nhaarman.mockitokotlin2.inOrder
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.runBlocking
 import nl.jovmit.roboapp.login.common.TestCoroutineDispatchers
 import nl.jovmit.roboapp.login.data.LoginCredentials
@@ -28,8 +27,6 @@ class LoginFeature {
     private lateinit var loginLiveDataObserver: Observer<LoginResult>
     @Mock
     private lateinit var loginApi: LoginApi
-    @Mock
-    private lateinit var loggedInUserResponse: Deferred<User>
 
     private val loggedInUser = User("username", "Full Name", "about")
     private val loginResults = LoginResult.Success(loggedInUser)
@@ -49,8 +46,7 @@ class LoginFeature {
 
     @Test
     fun perform_login() = runBlocking {
-        given(loginApi.login(loginCredentials)).willReturn(loggedInUserResponse)
-        given(loggedInUserResponse.await()).willReturn(loggedInUser)
+        given(loginApi.login(loginCredentials)).willReturn(loggedInUser)
 
         loginViewModel.loginLiveData().observeForever(loginLiveDataObserver)
         loginViewModel.login(loginCredentials)

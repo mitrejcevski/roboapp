@@ -1,7 +1,6 @@
 package nl.jovmit.roboapp.login
 
 import com.nhaarman.mockitokotlin2.given
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.runBlocking
 import nl.jovmit.roboapp.login.data.LoginCredentials
 import nl.jovmit.roboapp.login.data.LoginResult
@@ -21,8 +20,6 @@ class RemoteLoginRepositoryShould {
 
     @Mock
     private lateinit var loginApi: LoginApi
-    @Mock
-    private lateinit var loggedInUserResponse: Deferred<User>
 
     private val loggedInUser = User("username", "full name", "about")
     private val success = LoginResult.Success(loggedInUser)
@@ -38,8 +35,7 @@ class RemoteLoginRepositoryShould {
 
     @Test
     fun return_successful_result_when_login_successes() = runBlocking {
-        given(loginApi.login(credentials)).willReturn(loggedInUserResponse)
-        given(loggedInUserResponse.await()).willReturn(loggedInUser)
+        given(loginApi.login(credentials)).willReturn(loggedInUser)
 
         val result = loginRepository.performLogin(credentials)
 
