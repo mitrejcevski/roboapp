@@ -46,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun onLoginFailure(reason: String) {
-
+        textInfoLabel.text = reason
     }
 
     private fun triggerLogin() {
