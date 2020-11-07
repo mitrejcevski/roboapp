@@ -7,7 +7,6 @@ import io.mockk.junit5.MockKExtension
 import io.mockk.verify
 import nl.jovmit.roboapp.InstantTaskExecutorExtension
 import nl.jovmit.roboapp.search.data.SearchState
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -24,6 +23,10 @@ class SearcherShould {
 
   private lateinit var searcher: Searcher
 
+  private val query = "::irrelevant::"
+  private val valid = true
+  private val invalid = false
+
   @BeforeEach
   fun setUp() {
     searcher = Searcher(validator, repository)
@@ -31,8 +34,6 @@ class SearcherShould {
 
   @Test
   fun validateTheQuery() {
-    val query = "::irrelevant::"
-
     searcher.search(query)
 
     verify { validator.validate(query) }
@@ -40,8 +41,6 @@ class SearcherShould {
 
   @Test
   fun searchesTheRepositoryForAValidQuery() {
-    val query = "::irrelevant::"
-    val valid = true
     every { validator.validate(query) }.answers { valid }
 
     searcher.search(query)
@@ -51,8 +50,6 @@ class SearcherShould {
 
   @Test
   fun doesNotSearchTheRepositoryForAnInvalidQuery() {
-    val query = "::irrelevant::"
-    val invalid = false
     every { validator.validate(query) }.answers { invalid }
 
     searcher.search(query)
@@ -62,8 +59,6 @@ class SearcherShould {
 
   @Test
   fun informsWhenTheQueryIsNotValid() {
-    val query = "::irrelevant::"
-    val invalid = false
     every { validator.validate(query) }.answers { invalid }
 
     searcher.search(query)
