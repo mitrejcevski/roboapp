@@ -1,5 +1,6 @@
 package nl.jovmit.roboapp.search
 
+import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.verify
@@ -11,13 +12,16 @@ import org.junit.jupiter.api.extension.ExtendWith
 class SearcherShould {
 
   @RelaxedMockK
+  private lateinit var repository: SearchRepository
+
+  @RelaxedMockK
   private lateinit var validator: Validator
 
   private lateinit var searcher: Searcher
 
   @BeforeEach
   fun setUp() {
-    searcher = Searcher(validator)
+    searcher = Searcher(validator, repository)
   }
 
   @Test
@@ -27,5 +31,16 @@ class SearcherShould {
     searcher.search(query)
 
     verify { validator.validate(query) }
+  }
+
+  @Test
+  fun searchesTheRepositoryForAValidQuery() {
+    val query = "::irrelevant::"
+    val valid = true
+    every { validator.validate(query) }.answers { valid }
+
+    searcher.search(query)
+
+    verify { repository.search(query) }
   }
 }

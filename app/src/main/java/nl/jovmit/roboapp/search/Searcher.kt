@@ -5,7 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import nl.jovmit.roboapp.search.data.SearchState
 
 class Searcher(
-  private val validator: Validator
+  private val validator: Validator,
+  private val repository: SearchRepository
 ) {
 
   private val _liveData = MutableLiveData<SearchState>()
@@ -13,5 +14,6 @@ class Searcher(
 
   fun search(query: String) {
     validator.validate(query)
+    repository.search(query)
   }
 }

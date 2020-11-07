@@ -1,8 +1,8 @@
 package nl.jovmit.roboapp.search
 
-class Validator {
+class SearchRepository {
 
-  fun validate(query: String): Boolean {
+  fun search(query: String) {
     TODO("not implemented")
   }
 }
