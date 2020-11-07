@@ -13,7 +13,8 @@ class Searcher(
   val searchLiveData: LiveData<SearchState> = _liveData
 
   fun search(query: String) {
-    validator.validate(query)
-    repository.search(query)
+    if (validator.validate(query)) {
+      repository.search(query)
+    }
   }
 }

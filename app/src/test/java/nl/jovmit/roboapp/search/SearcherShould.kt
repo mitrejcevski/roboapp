@@ -1,5 +1,6 @@
 package nl.jovmit.roboapp.search
 
+import io.mockk.Called
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.junit5.MockKExtension
@@ -42,5 +43,16 @@ class SearcherShould {
     searcher.search(query)
 
     verify { repository.search(query) }
+  }
+
+  @Test
+  fun doesNotSearchTheRepositoryForAnInvalidQuery() {
+    val query = "::irrelevant::"
+    val invalid = false
+    every { validator.validate(query) }.answers { invalid }
+
+    searcher.search(query)
+
+    verify { repository wasNot Called }
   }
 }
