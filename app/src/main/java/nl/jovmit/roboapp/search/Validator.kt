@@ -3,6 +3,7 @@ package nl.jovmit.roboapp.search
 class Validator {
 
   fun validate(query: String): Boolean {
-    TODO("not implemented")
+    return query.trim().isNotBlank()
+        && query.length > 3
   }
 }
