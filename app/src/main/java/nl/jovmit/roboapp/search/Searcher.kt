@@ -15,6 +15,8 @@ class Searcher(
   fun search(query: String) {
     if (validator.validate(query)) {
       repository.search(query)
+    } else {
+      _liveData.value = SearchState.InvalidQuery
     }
   }
 }

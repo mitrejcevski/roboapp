@@ -5,11 +5,15 @@ import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.verify
+import nl.jovmit.roboapp.InstantTaskExecutorExtension
+import nl.jovmit.roboapp.search.data.SearchState
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class)
+@ExtendWith(MockKExtension::class, InstantTaskExecutorExtension::class)
 class SearcherShould {
 
   @RelaxedMockK
@@ -54,5 +58,16 @@ class SearcherShould {
     searcher.search(query)
 
     verify { repository wasNot Called }
+  }
+
+  @Test
+  fun informsWhenTheQueryIsNotValid() {
+    val query = "::irrelevant::"
+    val invalid = false
+    every { validator.validate(query) }.answers { invalid }
+
+    searcher.search(query)
+
+    assertEquals(SearchState.InvalidQuery, searcher.searchLiveData.value)
   }
 }
