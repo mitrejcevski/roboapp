@@ -4,6 +4,9 @@ class Validator {
 
   fun validate(query: String): Boolean {
     return query.trim().isNotBlank()
-        && query.length > 3
+        && query.isLongEnough()
   }
+
+  private fun String.isLongEnough() =
+    this.length > 3
 }
