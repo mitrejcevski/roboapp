@@ -7,7 +7,6 @@ import nl.jovmit.roboapp.search.data.SearchState
 import nl.jovmit.roboapp.search.exception.BadSearchException
 import nl.jovmit.roboapp.search.exception.OutOfInternetException
 import org.junit.Assert.assertEquals
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -20,6 +19,8 @@ class SearchRepositoryShould {
 
   private lateinit var searchRepository: SearchRepository
 
+  private val query = "::irrelevant::"
+
   @BeforeEach
   fun setUp() {
     searchRepository = SearchRepository(searchService)
@@ -27,7 +28,6 @@ class SearchRepositoryShould {
 
   @Test
   fun returnMatchingResults() {
-    val query = "::irrelevant::"
     val matches = listOf("one", "two")
     every { searchService.search(query) }.answers { matches }
 
@@ -38,7 +38,6 @@ class SearchRepositoryShould {
 
   @Test
   fun returnSearchingError() {
-    val query = "::irrelevant::"
     every { searchService.search(query) }.throws(BadSearchException())
 
     val result = searchRepository.search(query)
@@ -48,7 +47,6 @@ class SearchRepositoryShould {
 
   @Test
   fun returnOfflineError() {
-    val query = "::irrelevant::"
     every { searchService.search(query) }.throws(OutOfInternetException())
 
     val result = searchRepository.search(query)
