@@ -5,7 +5,9 @@ import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.junit5.MockKExtension
 import nl.jovmit.roboapp.search.data.SearchState
 import nl.jovmit.roboapp.search.exception.BadSearchException
+import nl.jovmit.roboapp.search.exception.OutOfInternetException
 import org.junit.Assert.assertEquals
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -42,5 +44,15 @@ class SearchRepositoryShould {
     val result = searchRepository.search(query)
 
     assertEquals(SearchState.SearchError, result)
+  }
+
+  @Test
+  fun returnOfflineError() {
+    val query = "::irrelevant::"
+    every { searchService.search(query) }.throws(OutOfInternetException())
+
+    val result = searchRepository.search(query)
+
+    assertEquals(SearchState.Offline, result)
   }
 }

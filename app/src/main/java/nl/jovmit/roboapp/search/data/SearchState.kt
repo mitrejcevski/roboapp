@@ -12,5 +12,7 @@ sealed class SearchState {
 
   object InvalidQuery : SearchState()
 
-  object SearchError: SearchState()
+  object SearchError : SearchState()
+
+  object Offline : SearchState()
 }
