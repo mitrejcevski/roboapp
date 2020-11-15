@@ -21,7 +21,8 @@ class SearchFeature {
   @BeforeEach
   fun setUp() {
     val validator = Validator()
-    val repository = SearchRepository()
+    val searchService = InMemorySearchService()
+    val repository = SearchRepository(searchService)
     val searcher = Searcher(validator, repository)
     uiController = SpyUiController().also {
       it.searcher = searcher
