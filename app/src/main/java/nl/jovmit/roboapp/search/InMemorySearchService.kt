@@ -1,8 +1,10 @@
 package nl.jovmit.roboapp.search
 
-class InMemorySearchService {
+class InMemorySearchService : SearchService {
 
-  fun search(query: String): List<String> {
+  override fun search(
+    query: String
+  ): List<String> {
     TODO("not implemented")
   }
 }

@@ -5,7 +5,7 @@ import nl.jovmit.roboapp.search.exception.BadSearchException
 import nl.jovmit.roboapp.search.exception.OutOfInternetException
 
 class SearchRepository(
-  private val searchService: InMemorySearchService
+  private val searchService: SearchService
 ) {
 
   fun search(query: String): SearchState {
