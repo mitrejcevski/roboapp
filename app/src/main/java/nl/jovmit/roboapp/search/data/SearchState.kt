@@ -11,4 +11,6 @@ sealed class SearchState {
   object HideLoading : SearchState()
 
   object InvalidQuery : SearchState()
+
+  object SearchError: SearchState()
 }

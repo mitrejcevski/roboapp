@@ -4,7 +4,8 @@ import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.junit5.MockKExtension
 import nl.jovmit.roboapp.search.data.SearchState
-import org.junit.Assert.*
+import nl.jovmit.roboapp.search.exception.BadSearchException
+import org.junit.Assert.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -31,5 +32,15 @@ class SearchRepositoryShould {
     val result = searchRepository.search(query)
 
     assertEquals(SearchState.MatchingResults(matches), result)
+  }
+
+  @Test
+  fun returnSearchingError() {
+    val query = "::irrelevant::"
+    every { searchService.search(query) }.throws(BadSearchException())
+
+    val result = searchRepository.search(query)
+
+    assertEquals(SearchState.SearchError, result)
   }
 }
