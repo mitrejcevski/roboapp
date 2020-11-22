@@ -1,7 +1,10 @@
 package nl.jovmit.roboapp.search
 
+import nl.jovmit.roboapp.search.exception.BadSearchException
 import org.junit.Assert.*
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class InMemorySearchServiceShould {
 
@@ -23,5 +26,14 @@ class InMemorySearchServiceShould {
     val result = searchService.search("item")
 
     assertEquals(listOf("item 1", "Item 2", "ITEM 3"), result)
+  }
+
+  @Test
+  fun throwsABadSearchException() {
+    val searchService = InMemorySearchService()
+
+    assertThrows<BadSearchException> {
+      searchService.search("")
+    }
   }
 }

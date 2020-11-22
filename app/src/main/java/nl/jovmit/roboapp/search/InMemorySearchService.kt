@@ -1,5 +1,7 @@
 package nl.jovmit.roboapp.search
 
+import nl.jovmit.roboapp.search.exception.BadSearchException
+
 class InMemorySearchService(
   private val allItems: List<String> = emptyList()
 ) : SearchService {
@@ -7,6 +9,7 @@ class InMemorySearchService(
   override fun search(
     query: String
   ): List<String> {
+    if(query.isBlank()) throw BadSearchException()
     return allItems.filter { it.contains(query, true) }
   }
 }
