@@ -1,6 +1,7 @@
 package nl.jovmit.roboapp.search
 
 import nl.jovmit.roboapp.search.exception.BadSearchException
+import nl.jovmit.roboapp.search.exception.OutOfInternetException
 import org.junit.Assert.*
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -34,6 +35,15 @@ class InMemorySearchServiceShould {
 
     assertThrows<BadSearchException> {
       searchService.search("")
+    }
+  }
+
+  @Test
+  fun throwAnOutOfInternetException() {
+    val searchService = InMemorySearchService(null)
+
+    assertThrows<OutOfInternetException> {
+      searchService.search("query")
     }
   }
 }
