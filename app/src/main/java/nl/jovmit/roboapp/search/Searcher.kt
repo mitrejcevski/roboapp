@@ -14,9 +14,15 @@ class Searcher(
 
   fun search(query: String) {
     if (validator.validate(query)) {
-      repository.search(query)
+      proceedSearch(query)
     } else {
       _liveData.value = SearchState.InvalidQuery
     }
+  }
+
+  private fun proceedSearch(query: String) {
+    _liveData.value = SearchState.ShowLoading
+    _liveData.value = repository.search(query)
+    _liveData.value = SearchState.HideLoading
   }
 }

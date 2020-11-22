@@ -1,49 +1,21 @@
 package nl.jovmit.roboapp.search
 
-import nl.jovmit.roboapp.search.exception.BadSearchException
-import nl.jovmit.roboapp.search.exception.OutOfInternetException
-import org.junit.Assert.*
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
+class InMemorySearchServiceShould : SearchServiceContract() {
 
-class InMemorySearchServiceShould {
-
-  @Test
-  fun returnEmptyResult() {
-    val searchService = InMemorySearchService()
-
-    val result = searchService.search("item")
-
-    assertEquals(emptyList<String>(), result)
+  override fun searchServiceWithout(
+    allItems: List<String>
+  ): SearchService {
+    val reversedItems = allItems.map { it.reversed() }
+    return InMemorySearchService(reversedItems)
   }
 
-  @Test
-  fun returnValuesContainingTheQuery() {
-    val searchService = InMemorySearchService(
-      listOf("one", "item 1", "two", "Item 2", "ITEM 3", "other")
-    )
-
-    val result = searchService.search("item")
-
-    assertEquals(listOf("item 1", "Item 2", "ITEM 3"), result)
+  override fun searchServiceWith(
+    allItems: List<String>
+  ): SearchService {
+    return InMemorySearchService(allItems)
   }
 
-  @Test
-  fun throwsABadSearchException() {
-    val searchService = InMemorySearchService()
-
-    assertThrows<BadSearchException> {
-      searchService.search("")
-    }
-  }
-
-  @Test
-  fun throwAnOutOfInternetException() {
-    val searchService = InMemorySearchService(null)
-
-    assertThrows<OutOfInternetException> {
-      searchService.search("query")
-    }
+  override fun offlineSearchService(): SearchService {
+    return InMemorySearchService(null)
   }
 }
