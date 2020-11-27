@@ -14,7 +14,7 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".login.LoginActivity">
+        <activity android:name=".search.SearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
