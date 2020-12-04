@@ -10,7 +10,7 @@ class Searcher {
     } else if (query == "another") {
       result = "Another Item"
     } else {
-      result = "No match found for coffee"
+      result = "No match found for $query"
     }
   }
 
