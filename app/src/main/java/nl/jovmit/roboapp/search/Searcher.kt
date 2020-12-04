@@ -2,11 +2,13 @@ package nl.jovmit.roboapp.search
 
 class Searcher {
 
-  fun search(query: String) {
+  private var result: String? = null
 
+  fun search(query: String) {
+    result = "Item 1"
   }
 
   fun getResult(): String? {
-    return "Item 1"
+    return result
   }
 }
