@@ -5,7 +5,11 @@ class Searcher {
   private var result: String? = null
 
   fun search(query: String) {
-    result = "Item 1"
+    if (query == "item") {
+      result = "Item 1"
+    } else if (query == "another") {
+      result = "Another Item"
+    }
   }
 
   fun getResult(): String? {

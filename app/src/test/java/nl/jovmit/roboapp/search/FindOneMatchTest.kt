@@ -16,7 +16,6 @@ class FindOneMatchTest {
   }
 
   @Test
-  @Disabled("Refactoring")
   fun anotherMatchFound() {
     val searcher = Searcher()
 
