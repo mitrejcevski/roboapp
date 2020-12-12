@@ -40,4 +40,13 @@ class FindOneMatchTest {
 
     assertEquals("Error: bad query", searcher.getResult())
   }
+
+  @Test
+  fun shortQuery() {
+    val searcher = Searcher()
+
+    searcher.search("abc")
+
+    assertEquals("Error: bad query", searcher.getResult())
+  }
 }
