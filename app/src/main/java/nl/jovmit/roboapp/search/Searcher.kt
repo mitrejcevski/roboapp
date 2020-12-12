@@ -5,12 +5,16 @@ class Searcher {
   private var result: String? = null
 
   fun search(query: String) {
-    if (query == "item") {
-      result = "Item 1"
-    } else if (query == "another") {
-      result = "Another Item"
+    if(query.isBlank()) {
+      result = "Error: bad query"
     } else {
-      result = "No match found for $query"
+      if (query == "item") {
+        result = "Item 1"
+      } else if (query == "another") {
+        result = "Another Item"
+      } else {
+        result = "No match found for $query"
+      }
     }
   }
 

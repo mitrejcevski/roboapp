@@ -31,4 +31,13 @@ class FindOneMatchTest {
 
     assertEquals("No match found for coffee", searcher.getResult())
   }
+
+  @Test
+  fun emptyQuery() {
+    val searcher = Searcher()
+
+    searcher.search("")
+
+    assertEquals("Error: bad query", searcher.getResult())
+  }
 }
