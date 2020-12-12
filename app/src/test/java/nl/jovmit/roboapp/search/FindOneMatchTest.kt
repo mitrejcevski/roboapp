@@ -1,8 +1,12 @@
 package nl.jovmit.roboapp.search
 
+import nl.jovmit.roboapp.InstantTaskExecutorExtension
+import nl.jovmit.roboapp.search.data.SearchState
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
+@ExtendWith(InstantTaskExecutorExtension::class)
 class FindOneMatchTest {
 
   @Test
@@ -11,7 +15,7 @@ class FindOneMatchTest {
 
     searcher.search("item")
 
-    assertEquals("Item 1", searcher.getResult())
+    assertEquals(SearchState.Match("Item 1"), searcher.resultState())
   }
 
   @Test
@@ -20,16 +24,17 @@ class FindOneMatchTest {
 
     searcher.search("another")
 
-    assertEquals("Another Item", searcher.getResult())
+    assertEquals(SearchState.Match("Another Item"), searcher.resultState())
   }
 
   @Test
   fun noMatchFound() {
+    val query = "coffee"
     val searcher = Searcher()
 
-    searcher.search("coffee")
+    searcher.search(query)
 
-    assertEquals("No match found for coffee", searcher.getResult())
+    assertEquals(SearchState.NoMatchFor(query), searcher.resultState())
   }
 
   @Test
@@ -38,7 +43,7 @@ class FindOneMatchTest {
 
     searcher.search("")
 
-    assertEquals("Error: bad query", searcher.getResult())
+    assertEquals(SearchState.BadQuery, searcher.resultState())
   }
 
   @Test
@@ -47,6 +52,6 @@ class FindOneMatchTest {
 
     searcher.search("abc")
 
-    assertEquals("Error: bad query", searcher.getResult())
+    assertEquals(SearchState.BadQuery, searcher.resultState())
   }
 }
