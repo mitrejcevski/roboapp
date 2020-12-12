@@ -3,16 +3,22 @@ package nl.jovmit.roboapp.search
 import nl.jovmit.roboapp.InstantTaskExecutorExtension
 import nl.jovmit.roboapp.search.data.SearchState
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(InstantTaskExecutorExtension::class)
 class FindOneMatchTest {
 
+  private lateinit var searcher: Searcher
+
+  @BeforeEach
+  fun setUp() {
+    searcher = Searcher()
+  }
+
   @Test
   fun matchFound() {
-    val searcher = Searcher()
-
     searcher.search("item")
 
     assertEquals(SearchState.Match("Item 1"), searcher.resultState())
@@ -20,8 +26,6 @@ class FindOneMatchTest {
 
   @Test
   fun anotherMatchFound() {
-    val searcher = Searcher()
-
     searcher.search("another")
 
     assertEquals(SearchState.Match("Another Item"), searcher.resultState())
@@ -30,7 +34,6 @@ class FindOneMatchTest {
   @Test
   fun noMatchFound() {
     val query = "coffee"
-    val searcher = Searcher()
 
     searcher.search(query)
 
@@ -39,8 +42,6 @@ class FindOneMatchTest {
 
   @Test
   fun emptyQuery() {
-    val searcher = Searcher()
-
     searcher.search("")
 
     assertEquals(SearchState.BadQuery, searcher.resultState())
@@ -48,8 +49,6 @@ class FindOneMatchTest {
 
   @Test
   fun shortQuery() {
-    val searcher = Searcher()
-
     searcher.search("abc")
 
     assertEquals(SearchState.BadQuery, searcher.resultState())
