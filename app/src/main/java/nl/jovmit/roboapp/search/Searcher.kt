@@ -3,13 +3,15 @@ package nl.jovmit.roboapp.search
 import androidx.lifecycle.MutableLiveData
 import nl.jovmit.roboapp.search.data.SearchState
 
-class Searcher {
+class Searcher(
+  private val validator: QueryValidator
+) {
 
   private val searchStateLiveData =
     MutableLiveData<SearchState>()
 
   fun search(query: String) {
-    if (query.trim().length > 3) {
+    if (validator.validate(query)) {
       if (query == "item") {
         searchStateLiveData.value = SearchState.Match("Item 1")
       } else if (query == "another") {

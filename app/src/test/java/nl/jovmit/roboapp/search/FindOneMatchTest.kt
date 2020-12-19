@@ -14,7 +14,7 @@ class FindOneMatchTest {
 
   @BeforeEach
   fun setUp() {
-    searcher = Searcher()
+    searcher = Searcher(QueryValidator())
   }
 
   @Test
