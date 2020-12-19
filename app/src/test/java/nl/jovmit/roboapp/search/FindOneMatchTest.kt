@@ -16,7 +16,9 @@ class FindOneMatchTest {
   fun setUp() {
     val minQueryLength = 3
     val validator = QueryValidator(minQueryLength)
-    searcher = Searcher(validator, Repository())
+    val availableValues = listOf("Item 1", "Another Value")
+    val repository = Repository(availableValues)
+    searcher = Searcher(validator, repository)
   }
 
   @Test
