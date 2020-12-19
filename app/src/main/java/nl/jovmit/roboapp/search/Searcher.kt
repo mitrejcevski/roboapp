@@ -12,10 +12,11 @@ class Searcher(
 
   fun search(query: String) {
     if (validator.validate(query)) {
-      if (query == "item") {
-        searchStateLiveData.value = SearchState.Match("Item 1")
-      } else if (query == "another") {
-        searchStateLiveData.value = SearchState.Match("Another Value")
+      val availableValues = listOf("Item 1", "Another Value")
+      val hasValue = availableValues.any { it.contains(query, true) }
+      if (hasValue) {
+        val match = availableValues.first { it.contains(query, true) }
+        searchStateLiveData.value = SearchState.Match(match)
       } else {
         searchStateLiveData.value = SearchState.NoMatchFor(query)
       }
