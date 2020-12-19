@@ -1,8 +1,10 @@
 package nl.jovmit.roboapp.search
 
-class QueryValidator {
+class QueryValidator(
+  private val minQueryLength: Int
+) {
 
   fun validate(query: String): Boolean {
-    return query.trim().length > 3
+    return query.trim().length > minQueryLength
   }
 }

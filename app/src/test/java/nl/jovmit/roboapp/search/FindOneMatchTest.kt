@@ -14,7 +14,9 @@ class FindOneMatchTest {
 
   @BeforeEach
   fun setUp() {
-    searcher = Searcher(QueryValidator())
+    val minQueryLength = 3
+    val validator = QueryValidator(minQueryLength)
+    searcher = Searcher(validator)
   }
 
   @Test
