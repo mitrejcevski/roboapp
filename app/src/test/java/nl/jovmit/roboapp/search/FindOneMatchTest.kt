@@ -28,7 +28,7 @@ class FindOneMatchTest {
   fun anotherMatchFound() {
     searcher.search("another")
 
-    assertEquals(SearchState.Match("Another Item"), searcher.resultState())
+    assertEquals(SearchState.Match("Another Value"), searcher.resultState())
   }
 
   @Test
@@ -50,6 +50,13 @@ class FindOneMatchTest {
   @Test
   fun shortQuery() {
     searcher.search("abc")
+
+    assertEquals(SearchState.BadQuery, searcher.resultState())
+  }
+
+  @Test
+  fun anotherShortQuery() {
+    searcher.search("   ab")
 
     assertEquals(SearchState.BadQuery, searcher.resultState())
   }

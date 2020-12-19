@@ -9,13 +9,14 @@ class Searcher {
     MutableLiveData<SearchState>()
 
   fun search(query: String) {
-    if (query.isBlank() || query == "abc") {
+    val isValid = query.trim().length > 3
+    if (!isValid) {
       searchStateLiveData.value = SearchState.BadQuery
     } else {
       if (query == "item") {
         searchStateLiveData.value = SearchState.Match("Item 1")
       } else if (query == "another") {
-        searchStateLiveData.value = SearchState.Match("Another Item")
+        searchStateLiveData.value = SearchState.Match("Another Value")
       } else {
         searchStateLiveData.value = SearchState.NoMatchFor(query)
       }
