@@ -8,10 +8,8 @@ class Repository(
 
   fun performSearch(query: String): SearchState {
     val matches = availableValues.filter { it.contains(query, true) }
-    return if (matches.count() > 1) {
+    return if (matches.isNotEmpty()) {
       SearchState.Matches(matches)
-    } else if (matches.count() == 1) {
-      SearchState.Match(matches.first())
     } else {
       SearchState.NoMatchFor(query)
     }

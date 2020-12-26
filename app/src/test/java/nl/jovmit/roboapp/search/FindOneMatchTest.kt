@@ -25,14 +25,14 @@ class FindOneMatchTest {
   fun matchFound() {
     searcher.search("item")
 
-    assertEquals(SearchState.Match("Item 1"), searcher.searchStateLiveData.value)
+    assertEquals(SearchState.Matches(listOf("Item 1")), searcher.searchStateLiveData.value)
   }
 
   @Test
   fun anotherMatchFound() {
     searcher.search("another")
 
-    assertEquals(SearchState.Match("Another Value"), searcher.searchStateLiveData.value)
+    assertEquals(SearchState.Matches(listOf("Another Value")), searcher.searchStateLiveData.value)
   }
 
   @Test
