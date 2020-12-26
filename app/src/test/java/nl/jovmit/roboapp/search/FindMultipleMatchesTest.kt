@@ -13,7 +13,7 @@ class FindMultipleMatchesTest {
   fun multipleMatchesFound() {
     val validator = QueryValidator(2)
     val repository = Repository(
-      listOf("item one", "else", "one", "one value", "other")
+      InMemorySearchService(listOf("item one", "else", "one", "one value", "other"))
     )
     val searcher = Searcher(validator, repository)
 
