@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(InstantTaskExecutorExtension::class)
-class FindOneMatchTest {
+class FindNoMatchesTest {
 
   private lateinit var searcher: Searcher
 
@@ -22,16 +22,32 @@ class FindOneMatchTest {
   }
 
   @Test
-  fun matchFound() {
-    searcher.search("item")
+  fun noMatchFound() {
+    val query = "coffee"
 
-    assertEquals(SearchState.Matches(listOf("Item 1")), searcher.searchStateLiveData.value)
+    searcher.search(query)
+
+    assertEquals(SearchState.NoMatchFor(query), searcher.searchStateLiveData.value)
   }
 
   @Test
-  fun anotherMatchFound() {
-    searcher.search("another")
+  fun emptyQuery() {
+    searcher.search("")
 
-    assertEquals(SearchState.Matches(listOf("Another Value")), searcher.searchStateLiveData.value)
+    assertEquals(SearchState.BadQuery, searcher.searchStateLiveData.value)
+  }
+
+  @Test
+  fun shortQuery() {
+    searcher.search("abc")
+
+    assertEquals(SearchState.BadQuery, searcher.searchStateLiveData.value)
+  }
+
+  @Test
+  fun anotherShortQuery() {
+    searcher.search("   ab")
+
+    assertEquals(SearchState.BadQuery, searcher.searchStateLiveData.value)
   }
 }
