@@ -3,7 +3,7 @@ package nl.jovmit.roboapp.search
 import nl.jovmit.roboapp.search.data.SearchState
 
 class Repository(
-  private val searchService: InMemorySearchService
+  private val searchService: SearchService
 ) {
 
   fun performSearch(query: String): SearchState {
