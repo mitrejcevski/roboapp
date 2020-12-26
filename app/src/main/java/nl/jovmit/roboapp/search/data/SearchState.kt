@@ -6,5 +6,7 @@ sealed class SearchState {
 
   data class Match(val value: String) : SearchState()
 
+  data class Matches(val matches: List<String>) : SearchState()
+
   data class NoMatchFor(val query: String) : SearchState()
 }
