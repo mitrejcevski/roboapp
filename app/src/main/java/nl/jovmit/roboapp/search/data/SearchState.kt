@@ -6,6 +6,8 @@ sealed class SearchState {
 
   object BadSearch : SearchState()
 
+  object Offline : SearchState()
+
   data class Matches(val matches: List<String>) : SearchState()
 
   data class NoMatchFor(val query: String) : SearchState()

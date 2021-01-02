@@ -2,6 +2,7 @@ package nl.jovmit.roboapp.search
 
 import nl.jovmit.roboapp.search.data.SearchState
 import nl.jovmit.roboapp.search.exception.BadSearchException
+import nl.jovmit.roboapp.search.exception.ConnectionUnavailableException
 
 class Repository(
   private val searchService: SearchService
@@ -12,6 +13,8 @@ class Repository(
       findMatches(query)
     } catch (badSearchException: BadSearchException) {
       SearchState.BadSearch
+    } catch (offlineException: ConnectionUnavailableException) {
+      SearchState.Offline
     }
   }
 
