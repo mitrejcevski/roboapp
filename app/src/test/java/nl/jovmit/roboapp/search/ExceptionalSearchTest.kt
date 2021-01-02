@@ -11,9 +11,11 @@ import org.junit.jupiter.api.extension.ExtendWith
 @ExtendWith(InstantTaskExecutorExtension::class)
 class ExceptionalSearchTest {
 
+  private val minQueryLength = 3
+  private val validator = QueryValidator(minQueryLength)
+
   @Test
   fun badSearchException() {
-    val validator = QueryValidator(3)
     val repository = Repository(UnavailableSearchService())
     val searcher = Searcher(validator, repository)
 
@@ -24,7 +26,6 @@ class ExceptionalSearchTest {
 
   @Test
   fun offlineException() {
-    val validator = QueryValidator(3)
     val repository = Repository(OfflineSearchService())
     val searcher = Searcher(validator, repository)
 
