@@ -8,15 +8,19 @@ class Repository(
 ) {
 
   fun performSearch(query: String): SearchState {
-    try {
-      val matches = searchService.findMatches(query)
-      return if (matches.isNotEmpty()) {
-        SearchState.Matches(matches)
-      } else {
-        SearchState.NoMatchFor(query)
-      }
-    } catch (e: BadSearchException) {
-      return SearchState.BadSearch
+    return try {
+      findMatches(query)
+    } catch (badSearchException: BadSearchException) {
+      SearchState.BadSearch
+    }
+  }
+
+  private fun findMatches(query: String): SearchState {
+    val matches = searchService.findMatches(query)
+    return if (matches.isNotEmpty()) {
+      SearchState.Matches(matches)
+    } else {
+      SearchState.NoMatchFor(query)
     }
   }
 }
