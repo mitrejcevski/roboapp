@@ -16,8 +16,10 @@ class InMemorySearchServiceTest {
     assertEquals(emptyList<String>(), result)
   }
 
-  private fun searchServiceWithout(availableValues: List<String>) =
-    InMemorySearchService(
-      availableValues.map { it.reversed() }
-    )
+  private fun searchServiceWithout(
+    availableValues: List<String>
+  ): SearchService {
+    val reversedValues = availableValues.map { it.reversed() }
+    return InMemorySearchService(reversedValues)
+  }
 }
