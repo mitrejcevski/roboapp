@@ -31,11 +31,15 @@ class InMemorySearchServiceTest {
 
   @Test
   fun throwsABadSearchException() {
-    val searchService = InMemorySearchService(emptyList())
+    val searchService = unavailableSearchService()
 
     assertThrows<BadSearchException> {
       searchService.findMatches("")
     }
+  }
+
+  private fun unavailableSearchService(): SearchService {
+    return InMemorySearchService(emptyList())
   }
 
   private fun searchServiceWithout(
