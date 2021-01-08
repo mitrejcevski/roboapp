@@ -1,7 +1,9 @@
 package nl.jovmit.roboapp.search
 
+import nl.jovmit.roboapp.search.exception.BadSearchException
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class InMemorySearchServiceTest {
 
@@ -25,6 +27,15 @@ class InMemorySearchServiceTest {
     val result = searchService.findMatches("item")
 
     assertEquals(listOf("item 1", "Item 2", "ITEM 3"), result)
+  }
+
+  @Test
+  fun throwsABadSearchException() {
+    val searchService = InMemorySearchService(emptyList())
+
+    assertThrows<BadSearchException> {
+      searchService.findMatches("")
+    }
   }
 
   private fun searchServiceWithout(
