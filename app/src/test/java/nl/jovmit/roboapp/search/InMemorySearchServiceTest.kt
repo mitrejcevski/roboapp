@@ -18,7 +18,7 @@ class InMemorySearchServiceTest {
 
   @Test
   fun returnMatches() {
-    val searchService = InMemorySearchService(
+    val searchService = searchServiceWith(
       listOf("one", "item 1", "two", "Item 2", "else", "ITEM 3")
     )
 
@@ -32,5 +32,11 @@ class InMemorySearchServiceTest {
   ): SearchService {
     val reversedValues = availableValues.map { it.reversed() }
     return InMemorySearchService(reversedValues)
+  }
+
+  private fun searchServiceWith(
+    availableValues: List<String>,
+  ): SearchService {
+    return InMemorySearchService(availableValues)
   }
 }
