@@ -41,11 +41,15 @@ class InMemorySearchServiceTest {
 
   @Test
   fun throwsAnOfflineException() {
-    val searchService = InMemorySearchService(null)
+    val searchService = offlineSearchService()
 
     assertThrows<ConnectionUnavailableException> {
       searchService.findMatches("whatever")
     }
+  }
+
+  private fun offlineSearchService(): SearchService {
+    return InMemorySearchService(null)
   }
 
   private fun unavailableSearchService(): SearchService {
