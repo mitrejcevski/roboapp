@@ -1,6 +1,7 @@
 package nl.jovmit.roboapp.search
 
 import nl.jovmit.roboapp.search.exception.BadSearchException
+import nl.jovmit.roboapp.search.exception.ConnectionUnavailableException
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -35,6 +36,15 @@ class InMemorySearchServiceTest {
 
     assertThrows<BadSearchException> {
       searchService.findMatches("")
+    }
+  }
+
+  @Test
+  fun throwsAnOfflineException() {
+    val searchService = InMemorySearchService(null)
+
+    assertThrows<ConnectionUnavailableException> {
+      searchService.findMatches("whatever")
     }
   }
 
