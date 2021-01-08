@@ -1,6 +1,6 @@
 package nl.jovmit.roboapp.search
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class InMemorySearchServiceTest {
@@ -16,8 +16,19 @@ class InMemorySearchServiceTest {
     assertEquals(emptyList<String>(), result)
   }
 
+  @Test
+  fun returnMatches() {
+    val searchService = InMemorySearchService(
+      listOf("one", "item 1", "two", "Item 2", "else", "ITEM 3")
+    )
+
+    val result = searchService.findMatches("item")
+
+    assertEquals(listOf("item 1", "Item 2", "ITEM 3"), result)
+  }
+
   private fun searchServiceWithout(
-    availableValues: List<String>
+    availableValues: List<String>,
   ): SearchService {
     val reversedValues = availableValues.map { it.reversed() }
     return InMemorySearchService(reversedValues)
