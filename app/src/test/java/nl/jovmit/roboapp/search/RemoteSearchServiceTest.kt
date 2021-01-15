@@ -20,13 +20,22 @@ class RemoteSearchServiceTest : SearchServiceContract() {
     availableValues: List<String>,
   ): SearchService {
     val reversedValues = availableValues.map { it.reversed() }
-    return RemoteSearchService(AvailableSearchService(reversedValues))
+    return RemoteSearchService(AvailableSearchApi(reversedValues))
   }
 
   override fun searchServiceWith(
     availableValues: List<String>,
   ): SearchService {
-    return RemoteSearchService(AvailableSearchService(availableValues))
+    return RemoteSearchService(AvailableSearchApi(availableValues))
+  }
+
+  class AvailableSearchApi(
+    private val availableValues: List<String>,
+  ) : SearchApi {
+
+    override fun findMatches(query: String): List<String> {
+      return availableValues.filter { it.contains(query, true) }
+    }
   }
 
   class UnavailableSearchApi : SearchApi {
@@ -35,15 +44,6 @@ class RemoteSearchServiceTest : SearchServiceContract() {
       val errorBody = ResponseBody.create(null, "Bad query")
       val badResponse = Response.error<String>(406, errorBody)
       throw HttpException(badResponse)
-    }
-  }
-
-  class AvailableSearchService(
-    private val availableValues: List<String>,
-  ) : SearchApi {
-
-    override fun findMatches(query: String): List<String> {
-      return availableValues.filter { it.contains(query, true) }
     }
   }
 
