@@ -8,8 +8,7 @@ import java.io.IOException
 class RemoteSearchServiceTest : SearchServiceContract() {
 
   override fun offlineSearchService(): SearchService {
-    val api = OfflineSearchApi()
-    return RemoteSearchService(api)
+    return RemoteSearchService(OfflineSearchApi())
   }
 
   override fun unavailableSearchService(): SearchService {
