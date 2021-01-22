@@ -1,5 +1,6 @@
 package nl.jovmit.roboapp.search
 
+import kotlinx.coroutines.runBlocking
 import nl.jovmit.roboapp.search.exception.BadSearchException
 import nl.jovmit.roboapp.search.exception.ConnectionUnavailableException
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -9,7 +10,7 @@ import org.junit.jupiter.api.assertThrows
 abstract class SearchServiceContract {
 
   @Test
-  fun returnEmptyResult() {
+  fun returnEmptyResult() = runBlocking {
     val searchService = searchServiceWithout(
       listOf("Item 1", "item 2")
     )
@@ -20,7 +21,7 @@ abstract class SearchServiceContract {
   }
 
   @Test
-  fun returnMatches() {
+  fun returnMatches() = runBlocking {
     val searchService = searchServiceWith(
       listOf("one", "item 1", "two", "Item 2", "else", "ITEM 3")
     )
@@ -31,7 +32,7 @@ abstract class SearchServiceContract {
   }
 
   @Test
-  fun throwsABadSearchException() {
+  fun throwsABadSearchException() = runBlocking<Unit> {
     val searchService = unavailableSearchService()
 
     assertThrows<BadSearchException> {
@@ -40,7 +41,7 @@ abstract class SearchServiceContract {
   }
 
   @Test
-  fun throwsAnOfflineException() {
+  fun throwsAnOfflineException() = runBlocking<Unit> {
     val searchService = offlineSearchService()
 
     assertThrows<ConnectionUnavailableException> {

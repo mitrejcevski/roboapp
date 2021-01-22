@@ -8,7 +8,7 @@ class Repository(
   private val searchService: SearchService
 ) {
 
-  fun performSearch(query: String): SearchState {
+  suspend fun performSearch(query: String): SearchState {
     return try {
       findMatches(query)
     } catch (badSearchException: BadSearchException) {
@@ -18,7 +18,7 @@ class Repository(
     }
   }
 
-  private fun findMatches(query: String): SearchState {
+  private suspend fun findMatches(query: String): SearchState {
     val matches = searchService.findMatches(query)
     return if (matches.isNotEmpty()) {
       SearchState.Matches(matches)

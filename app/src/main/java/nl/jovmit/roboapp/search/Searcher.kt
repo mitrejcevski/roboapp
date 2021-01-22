@@ -2,12 +2,15 @@ package nl.jovmit.roboapp.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import nl.jovmit.roboapp.search.data.SearchState
 
 class Searcher(
   private val validator: QueryValidator,
-  private val repository: Repository
-) {
+  private val repository: Repository,
+) : ViewModel() {
 
   private val _searchStateLiveData =
     MutableLiveData<SearchState>()
@@ -17,10 +20,16 @@ class Searcher(
 
   fun search(query: String) {
     if (validator.validate(query)) {
-      val result = repository.performSearch(query)
-      _searchStateLiveData.value = result
+      performSearch(query)
     } else {
       _searchStateLiveData.value = SearchState.BadQuery
+    }
+  }
+
+  private fun performSearch(query: String) {
+    viewModelScope.launch {
+      val result = repository.performSearch(query)
+      _searchStateLiveData.value = result
     }
   }
 }

@@ -9,7 +9,7 @@ class RemoteSearchService(
   private val searchApi: SearchApi,
 ) : SearchService {
 
-  override fun findMatches(
+  override suspend fun findMatches(
     query: String,
   ): List<String> {
     try {

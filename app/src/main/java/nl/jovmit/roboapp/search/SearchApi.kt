@@ -6,7 +6,7 @@ import retrofit2.http.Query
 interface SearchApi {
 
   @GET("/search")
-  fun findMatches(
+  suspend fun findMatches(
     @Query("keyword") query: String,
   ): List<String>
 }

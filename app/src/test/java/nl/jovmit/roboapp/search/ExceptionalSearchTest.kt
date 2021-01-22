@@ -36,14 +36,14 @@ class ExceptionalSearchTest {
 
   class OfflineSearchService : SearchService {
 
-    override fun findMatches(query: String): List<String> {
+    override suspend fun findMatches(query: String): List<String> {
       throw ConnectionUnavailableException()
     }
   }
 
   class UnavailableSearchService : SearchService {
 
-    override fun findMatches(query: String): List<String> {
+    override suspend fun findMatches(query: String): List<String> {
       throw BadSearchException()
     }
   }

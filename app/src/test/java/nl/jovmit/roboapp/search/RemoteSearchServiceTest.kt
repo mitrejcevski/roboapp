@@ -32,14 +32,14 @@ class RemoteSearchServiceTest : SearchServiceContract() {
     private val availableValues: List<String>,
   ) : SearchApi {
 
-    override fun findMatches(query: String): List<String> {
+    override suspend fun findMatches(query: String): List<String> {
       return availableValues.filter { it.contains(query, true) }
     }
   }
 
   class UnavailableSearchApi : SearchApi {
 
-    override fun findMatches(query: String): List<String> {
+    override suspend fun findMatches(query: String): List<String> {
       val errorBody = ResponseBody.create(null, "Bad query")
       val badResponse = Response.error<String>(406, errorBody)
       throw HttpException(badResponse)
@@ -48,7 +48,7 @@ class RemoteSearchServiceTest : SearchServiceContract() {
 
   class OfflineSearchApi : SearchApi {
 
-    override fun findMatches(query: String): List<String> {
+    override suspend fun findMatches(query: String): List<String> {
       throw IOException()
     }
   }
